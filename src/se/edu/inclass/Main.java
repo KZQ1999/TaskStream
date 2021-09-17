@@ -45,6 +45,13 @@ public class Main {
         tasks.stream() // convert data to stream
                 .forEach(System.out::println); //terminal operator
     }
+    public static void printDeadlineUsingStream(ArrayList<Task> tasks) {
+        System.out.println("Printing deadlines using stream");
+        tasks.stream()
+                .filter((t) -> t instanceof Deadline) // filtering using lamda
+                .forEach(System.out::println);
+                
+    }
     public static void printDeadlines(ArrayList<Task> tasksData) {
         for (Task t : tasksData) {
             if (t instanceof Deadline) {
