@@ -16,11 +16,13 @@ public class Main {
         DataManager dm = new DataManager("./data/data.txt");
         ArrayList<Task> tasksData = dm.loadData();
 
-        System.out.println("Printing deadlines");
-        printDeadlines(tasksData);
-
-        System.out.println("Total number of deadlines: " + countDeadlines(tasksData));
-
+//        System.out.println("Printing deadlines");
+//        printDeadlines(tasksData);
+//
+//        System.out.println("Total number of deadlines: " + countDeadlines(tasksData));
+//        printDataWithStreams(tasksData);
+        printDeadlineUsingStream(tasksData);
+        System.out.println("Total number of data (using Streams): " + countDeadlinesUsingStream(tasksData));
     }
 
     private static int countDeadlines(ArrayList<Task> tasksData) {
@@ -38,13 +40,13 @@ public class Main {
             System.out.println(t);
         }
     }
-
     
     public static void printDataWithStreams(ArrayList<Task> tasks) {
         System.out.println("Printing data using stream");
         tasks.stream() // convert data to stream
                 .forEach(System.out::println); //terminal operator
     }
+    
     public static void printDeadlineUsingStream(ArrayList<Task> tasks) {
         System.out.println("Printing deadlines using stream");
         tasks.stream()
@@ -52,6 +54,14 @@ public class Main {
                 .forEach(System.out::println);
                 
     }
+    
+    private static int countDeadlinesUsingStream(ArrayList<Task> tasks) {
+        int count  = (int)tasks.stream() // this returns a long so cast
+                .filter((t) -> t instanceof Deadline) // filtering using lamda
+                .count();
+        return count;
+    }
+    
     public static void printDeadlines(ArrayList<Task> tasksData) {
         for (Task t : tasksData) {
             if (t instanceof Deadline) {
