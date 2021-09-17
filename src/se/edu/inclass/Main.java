@@ -24,6 +24,7 @@ public class Main {
 //        printDeadlinesUsingStream(tasksData);
         ArrayList<Task> filteredList = filterTaskByString(tasksData,"11");
         printData(filteredList);
+
     }
 
     public static ArrayList<Task> filterTaskByString(ArrayList<Task> tasks, String description) {
@@ -48,7 +49,28 @@ public class Main {
             System.out.println(t);
         }
     }
-
+    
+    public static void printDataWithStreams(ArrayList<Task> tasks) {
+        System.out.println("Printing data using stream");
+        tasks.stream() // convert data to stream
+                .forEach(System.out::println); //terminal operator
+    }
+    
+    public static void printDeadlineUsingStream(ArrayList<Task> tasks) {
+        System.out.println("Printing deadlines using stream");
+        tasks.stream()
+                .filter((t) -> t instanceof Deadline) // filtering using lamda
+                .forEach(System.out::println);
+                
+    }
+    
+    private static int countDeadlinesUsingStream(ArrayList<Task> tasks) {
+        int count  = (int)tasks.stream() // this returns a long so cast
+                .filter((t) -> t instanceof Deadline) // filtering using lamda
+                .count();
+        return count;
+    }
+    
     public static void printDeadlines(ArrayList<Task> tasksData) {
         for (Task t : tasksData) {
             if (t instanceof Deadline) {
